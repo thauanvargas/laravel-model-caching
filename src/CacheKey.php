@@ -53,7 +53,6 @@ class CacheKey
         $key .= $this->getBindingsSlug();
         $key .= $keyDifferentiator;
         $key .= $this->macroKey;
-// dump($key);
         return $key;
     }
 
@@ -109,7 +108,7 @@ class CacheKey
 
         if (! is_numeric($subquery) && ! is_numeric(str_replace("_", "", $subquery))) {
             try {
-                $subquery = Uuid::fromBytes($subquery);
+                $subquery = Uuid::uuid4()::fromBytes($subquery);
                 $values = $this->recursiveImplode([$subquery], "_");
 
                 return "-{$where["column"]}_{$type}{$values}";
